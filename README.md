@@ -18,6 +18,7 @@ Persited:
   - has_one win
   - has_many ActionLogs
   - has_one current_turn
+  - area card layout (encoded in some intelligent way)
 - CharacterCard
   - name
   - max hp
