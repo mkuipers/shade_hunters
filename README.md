@@ -17,7 +17,7 @@ Persited:
   - discard B/G/W
   - has_one win
   - has_many ActionLogs
-  - current_player
+  - has_one current_turn
 - CharacterCard
   - name
   - max hp
@@ -28,6 +28,9 @@ Persited:
   - ActionClassName
   - has_one Actor (player)
   - has_many receivers (player)
+- Turn
+  - player
+  - turn_phase [start, move, resolve, target, attack, end]
 
 
 Game model logic:
@@ -38,7 +41,9 @@ Game model logic:
   - Draw card
   - Target player with action
   - Use Card
+  - Respond to card
   - Use special
   - Reveal Character card
   - Region 10
   - Region 9
+
