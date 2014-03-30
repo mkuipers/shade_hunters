@@ -1,0 +1,2 @@
+class BlackCardInDeck < CardInPile
+end

@@ -1,0 +1,2 @@
+class WhiteCard < ActionCard
+end

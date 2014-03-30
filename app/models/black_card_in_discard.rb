@@ -1,0 +1,2 @@
+class BlackCardInDiscard < CardInPile
+end

@@ -1,0 +1,2 @@
+class GreenCardInDiscard < CardInPile
+end

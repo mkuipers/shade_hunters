@@ -1,0 +1,3 @@
+class GreenCardInDeck < CardInPile
+
+end

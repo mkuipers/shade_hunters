@@ -1,0 +1,2 @@
+class WhiteCardInDeck < CardInPile
+end

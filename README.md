@@ -19,6 +19,8 @@ Persited:
   - has_many ActionLogs
   - has_one current_turn
   - area card layout (encoded in some intelligent way)
+  - current_player
+  - turn_phase
 - CharacterCard
   - name
   - max hp
@@ -27,11 +29,13 @@ Persited:
   - win condition
 - ActionLog
   - ActionClassName
-  - has_one Actor (player)
-  - has_many receivers (player)
-- Turn
-  - player
-  - turn_phase [start, move, resolve, target, attack, end]
+  - belongs_to Actor (player)
+  - belongs_to receivers (player)
+- Win
+  - if the game is over, there is a win record for the game with all the characters that have won.
+- ActionCard
+  - for the discard/decks of
+
 
 
 Game model logic:
