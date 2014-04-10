@@ -45,7 +45,7 @@ class AddInitialModels < ActiveRecord::Migration
       t.string :type
       t.uuid :action_card_id, null: false
       t.uuid :game_id, null: false
-      t.index :action_card_id, :game_id, unique: true
+      t.index [:action_card_id, :game_id], unique: true
     end
 
     create_table :action_card, force: true, id: :uuid do |t|
