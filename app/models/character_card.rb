@@ -1,5 +1,4 @@
-class CharacterCard < ActiveRecord::Base
-
+module CharacterCards
   def self.pick_4
     # 2 shadows
     # 2 hunters
@@ -27,5 +26,17 @@ class CharacterCard < ActiveRecord::Base
     # 3 shadows
     # 3 hunters
     # 2 neutrals
+  end
+
+  class CharacterCard
+  end
+
+  class NeutralCharacterCard < CharacterCard
+  end
+
+  class ShadowCharacterCard < CharacterCard
+  end
+
+  class HunterCharacterCard < CharacterCard
   end
 end

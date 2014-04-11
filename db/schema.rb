@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140411155736) do
+ActiveRecord::Schema.define(version: 20140411192351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,14 +36,6 @@ ActiveRecord::Schema.define(version: 20140411155736) do
 
   add_index "card_in_pile", ["action_card_id", "game_id"], name: "index_card_in_pile_on_action_card_id_and_game_id", unique: true, using: :btree
 
-  create_table "character_card", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string  "name",            null: false
-    t.integer "max_hp",          null: false
-    t.string  "allegiance"
-    t.string  "special_ability"
-    t.string  "win_condition"
-  end
-
   create_table "games", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string "area_card_1",       null: false
     t.string "area_card_2",       null: false
@@ -56,13 +48,13 @@ ActiveRecord::Schema.define(version: 20140411155736) do
   end
 
   create_table "players", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid    "game_id",                           null: false
-    t.uuid    "character_card_id",                 null: false
-    t.integer "current_health",                    null: false
+    t.uuid    "game_id",                          null: false
+    t.integer "current_health",                   null: false
     t.string  "current_location"
-    t.boolean "revealed",          default: false
+    t.boolean "revealed",         default: false
     t.integer "turn_order"
     t.uuid    "user_id"
+    t.string  "character_name"
   end
 
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
