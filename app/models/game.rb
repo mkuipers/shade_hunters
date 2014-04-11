@@ -9,4 +9,11 @@ class Game < ActiveRecord::Base
   has_many :green_discard_cards, through: :green_card_in_discard
   has_many :black_discard_cards, through: :black_card_in_discard
   has_many :white_discard_cards, through: :white_card_in_discard
+
+  validate :number_of_players
+
+  def number_of_players
+    errors.add(:players, "too many players") if players.size > 8
+    errors.add(:players, "too few players") if players.size < 4
+  end
 end
