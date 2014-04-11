@@ -1,38 +1,29 @@
 module CharacterCards
   def self.pick_4
-    # 2 shadows
-    # 2 hunters
+    SHADOWS.sample(2) + HUNTERS.sample(2)
   end
 
   def self.pick_5
-    # 2 shadows
-    # 2 hunters
-    # 1 neutral
+    SHADOWS.sample(2) + HUNTERS.sample(2) + NEUTRALS.sample(1)
   end
 
   def self.pick_6
-    # 2 shadows
-    # 2 hunters
-    # 2 neutrals
+    SHADOWS.sample(2) + HUNTERS.sample(2) + NEUTRALS.sample(2)
   end
 
   def self.pick_7
-    # 2 shadows
-    # 2 hunters
-    # 3 neutrals
+    SHADOWS.sample(2) + HUNTERS.sample(2) + NEUTRALS.sample(3)
   end
 
   def self.pick_8
-    # 3 shadows
-    # 3 hunters
-    # 2 neutrals
+    SHADOWS.sample(3) + HUNTERS.sample(3) + NEUTRALS.sample(2)
   end
 
   class CharacterCard
     attr_reader :name, :max_hp, :allegiance, :win_condition, :special_ability
 
     def initialize(name:, max_hp:, allegiance: )
-      @allegiance = 'neutral'
+      @allegiance = allegiance
       @name = name
       @max_hp = max_hp
       #@win_condition = find_win_condition
