@@ -5,4 +5,8 @@ Game.blueprint do
 end
 
 Player.blueprint do
+  user { User.make }
+end
+
+User.blueprint do
 end

@@ -12,6 +12,27 @@ class Game < ActiveRecord::Base
 
   validate :number_of_players
 
+  # Creating a new game requires an array of users
+  def initialize(users:)
+    raise ArgumentError unless users.size < 9 && users.size > 3
+    # pick the character cards based on the number of players in the game
+    character_cards = CharacterCard.send("pick_#{users.size}").shuffle
+
+    # create the players by character card with user
+    character_cards.each_with_index do |cc, i|
+      players << Player.new(character_card: cc, user: users[i], turn_order: i)
+    end
+
+    # create the decks
+    white_deck_cards = WhiteCard.all
+    green_deck_cards = GreenCard.all
+    black_deck_cards = BlackCard.all
+    white_discard_cards = []
+    green_discard_cards = []
+    black_discard_cards = []
+  end
+
+  #validation
   def number_of_players
     errors.add(:players, "too many players") if players.size > 8
     errors.add(:players, "too few players") if players.size < 4
