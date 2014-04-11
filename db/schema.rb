@@ -62,9 +62,10 @@ ActiveRecord::Schema.define(version: 20140411155736) do
     t.string  "current_location"
     t.boolean "revealed",          default: false
     t.integer "turn_order"
+    t.uuid    "user_id"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
