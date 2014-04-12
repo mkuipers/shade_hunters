@@ -44,11 +44,11 @@ module CharacterCards
 
     def find_win_condition
       if neutral?
-        NeutralWinConditions[name]
+        NEUTRAL_WIN_CONDITIONS[name]
       elsif shadow?
-        ShadowWinCondition
+        SHADOW_WIN_CONDITION
       else
-        HunterWinCondition
+        HUNTER_WIN_CONDITION
       end
     end
   end
@@ -83,4 +83,40 @@ module CharacterCards
   NEUTRALS = [AGNES, ALLIE, BOB, BRIAN, CATHERINE, CHARLES, DANIEL, DAVID]
   SHADOWS = [ULTRA_SOUL, UNKNOWN, VALKYRIE, VAMPIRE, WEREWOLF, WIGHT]
   HUNTERS = [ELLEN, EMI, FRANKLIN, FUKA, GEORGE, GREGOR]
+
+  # ====== Win Condition Function ====
+  # A win condition function takes a game and optionally a player and
+  # returns true if the win condition is met
+
+  HUNTER_WIN_CONDITION = Proc.new do |game, player=nil|
+    !game.shadows.living.any?
+  end
+
+  SHADOW_WIN_CONDITION = Proc.new do |game, player=nil|
+    !game.hunters.living.any? || game.neutrals.dead == 3
+  end
+
+  # ====== Neutral win conditions ====
+  AGNES_WIN_CONDITION = Proc.new do |game, player|
+    # Find the player on whom Agnes's win condition depends
+    subject_player_turn_order = player.special_ability_used? ? player.turn_order + 1 : player.turn_order - 1
+    #TODO make sure Game#players orders by turn_order
+    subject_game.players[subject_player_turn_order]
+    game.ended? && subject_player.won?
+  end
+
+  ALLIE_WIN_CONDITION = Proc.new do |game, player|
+    game.ended? && player.living?
+  end
+
+  CATHERINE_WIN_CONDITION = Proc.new do |game, player|
+    # first to die
+    ( !game.players.dead.any? && player.dead? ) ||
+    # OR one of the last two characters standing
+    ( game.ended? && game.players.living == 2 && player.living? )
+
+    # TODO: Handle simultaneous deaths. Catherine wins in this case.
+  end
+
+
 end
