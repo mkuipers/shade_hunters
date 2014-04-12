@@ -58,7 +58,7 @@ module CharacterCards
   AGNES = CharacterCard.new(name: "Agnes", max_hp: 8, allegiance: "neutral")
   ALLIE = CharacterCard.new(name: "Allie", max_hp: 8, allegiance: "neutral" )
   BOB = CharacterCard.new(name: "Bob", max_hp: 10, allegiance: "neutral")
-  BRIAN = CharacterCard.new(name: "Brian", max_hp: 10, allegiance: "neutral")
+  BRYAN = CharacterCard.new(name: "Bryan", max_hp: 10, allegiance: "neutral")
   CATHERINE = CharacterCard.new(name: "Catherine", max_hp: 11, allegiance: "neutral")
   CHARLES = CharacterCard.new(name: "Charles", max_hp: 11, allegiance: "neutral")
   DANIEL = CharacterCard.new(name: "Daniel", max_hp: 13, allegiance: "neutral")
@@ -80,11 +80,12 @@ module CharacterCards
   GEORGE = CharacterCard.new(name: "George", max_hp: 14, allegiance: "hunter")
   GREGOR = CharacterCard.new(name: "Gregor", max_hp: 14, allegiance: "hunter")
 
-  NEUTRALS = [AGNES, ALLIE, BOB, BRIAN, CATHERINE, CHARLES, DANIEL, DAVID]
+  NEUTRALS = [AGNES, ALLIE, BOB, BRYAN, CATHERINE, CHARLES, DANIEL, DAVID]
   SHADOWS = [ULTRA_SOUL, UNKNOWN, VALKYRIE, VAMPIRE, WEREWOLF, WIGHT]
   HUNTERS = [ELLEN, EMI, FRANKLIN, FUKA, GEORGE, GREGOR]
 
-  # ====== Win Condition Function ====
+
+  # ====== Win Condition Functions ====
   # A win condition function takes a game and optionally a player and
   # returns true if the win condition is met
 
@@ -109,13 +110,41 @@ module CharacterCards
     game.ended? && player.living?
   end
 
+  BOB_WIN_CONDITION = Proc.new do |game, player|
+    player.equipment.size >= 5
+  end
+
+  BRYAN_WIN_CONDITION = Proc.new do |game, player|
+    ( game.ended? && player.current_location == Locations::ERSTWHILE_ALTAR) ||
+    ( player.kills.any? { |p| p.character_card.max_hp >= 13 })
+  end
+
   CATHERINE_WIN_CONDITION = Proc.new do |game, player|
     # first to die
-    ( !game.players.dead.any? && player.dead? ) ||
+    ( !(game.players.dead - [player]).any? && player.dead? ) ||
     # OR one of the last two characters standing
-    ( game.ended? && game.players.living == 2 && player.living? )
-
+    ( game.ended? && game.players.living.size == 2 && player.living? )
     # TODO: Handle simultaneous deaths. Catherine wins in this case.
+  end
+
+  CHARLES_WIN_CONDITION = Proc.new do |game, player|
+    #TODO: make sure the Player.dead scope orders by time of death.
+    #TODO: make this work when multiple characters die last? or does it not matter?
+    game.players.dead.size >= 3 && player.kills.include?(game.players.dead.last)
+  end
+
+  DANIEL_WIN_CONDITION = Proc.new do |game, player|
+    !(game.players.dead - [player]).any? && player.dead? ) ||
+    HUNTER_WIN_CONDITION.call(game, player)
+  end
+
+  DAVID_WIN_CONDITION = Proc.new do |game, player|
+    #"Talisman", "Spear of Longinus", "Holy Robe", and "Silver Rosary".
+    winning_equipment = [ WhiteCard::TALISMAN,
+                          WhiteCard::SPEAR_OF_LONGINUS,
+                          WhiteCard::HOLY_ROBE,
+                          WhiteCard::SILVER_ROSARY]
+    (player.equipment & winning_equipment).size >= 3
   end
 
 
