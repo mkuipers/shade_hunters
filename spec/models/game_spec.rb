@@ -20,4 +20,17 @@ describe Game do
       expect(new_game.black_deck_cards).to eq(BlackCard.all)
     end
   end
+
+  context '#ended?' do
+  end
+
+  context '#hunters' do
+  end
+
+  context '#shadows' do
+  end
+
+  context '#neutrals' do
+  end
+
 end

@@ -37,4 +37,20 @@ class Game < ActiveRecord::Base
     errors.add(:players, "too many players") if players.size > 8
     errors.add(:players, "too few players") if players.size < 4
   end
+
+  def ended?
+    false
+  end
+
+  def hunters
+    players.where('allegiance' => 'hunter')
+  end
+
+  def shadows
+    players.where('allegiance' => 'shadow')
+  end
+
+  def neutrals
+    players.where('allegiance' => 'neutral')
+  end
 end
