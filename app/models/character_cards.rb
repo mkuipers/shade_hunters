@@ -134,7 +134,7 @@ module CharacterCards
   end
 
   DANIEL_WIN_CONDITION = Proc.new do |game, player|
-    !(game.players.dead - [player]).any? && player.dead? ) ||
+    ( !(game.players.dead - [player]).any? && player.dead? ) ||
     HUNTER_WIN_CONDITION.call(game, player)
   end
 
@@ -146,6 +146,4 @@ module CharacterCards
                           WhiteCard::SILVER_ROSARY]
     (player.equipment & winning_equipment).size >= 3
   end
-
-
 end
