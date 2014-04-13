@@ -19,6 +19,15 @@ module CharacterCards
     SHADOWS.sample(3) + HUNTERS.sample(3) + NEUTRALS.sample(2)
   end
 
+  def self.by_name
+    result = Hash.new
+    ALL.each do |i|
+      result[i.name] = i
+    end
+    result
+  end
+
+
   class CharacterCard
     attr_reader :name, :max_hp, :allegiance, :win_condition, :special_ability
 
@@ -83,7 +92,7 @@ module CharacterCards
   NEUTRALS = [AGNES, ALLIE, BOB, BRYAN, CATHERINE, CHARLES, DANIEL, DAVID]
   SHADOWS = [ULTRA_SOUL, UNKNOWN, VALKYRIE, VAMPIRE, WEREWOLF, WIGHT]
   HUNTERS = [ELLEN, EMI, FRANKLIN, FUKA, GEORGE, GREGOR]
-
+  ALL = NEUTRALS + SHADOWS + HUNTERS
 
   # ====== Win Condition Functions ====
   # A win condition function takes a game and optionally a player and

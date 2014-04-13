@@ -11,30 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140411192351) do
+ActiveRecord::Schema.define(version: 20140413172802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "action_card", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "action_cards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string "type"
     t.string "name"
   end
 
-  create_table "action_log", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "action_logs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string "type"
     t.uuid   "actor",    null: false
     t.uuid   "receiver"
   end
 
-  create_table "card_in_pile", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "card_in_piles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string "type"
     t.uuid   "action_card_id", null: false
     t.uuid   "game_id",        null: false
   end
 
-  add_index "card_in_pile", ["action_card_id", "game_id"], name: "index_card_in_pile_on_action_card_id_and_game_id", unique: true, using: :btree
+  add_index "card_in_piles", ["action_card_id", "game_id"], name: "index_card_in_piles_on_action_card_id_and_game_id", unique: true, using: :btree
 
   create_table "games", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string "area_card_1",       null: false
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140411192351) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "win", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "wins", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid "game_id",   null: false
     t.uuid "player_id", null: false
   end

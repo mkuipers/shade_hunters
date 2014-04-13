@@ -14,9 +14,10 @@ class Game < ActiveRecord::Base
 
   # Creating a new game requires an array of users
   def initialize(users:)
+    super nil
     raise ArgumentError unless users.size < 9 && users.size > 3
     # pick the character cards based on the number of players in the game
-    character_cards = CharacterCard.send("pick_#{users.size}").shuffle
+    character_cards = CharacterCards.send("pick_#{users.size}").shuffle
 
     # create the players by character card with user
     character_cards.each_with_index do |cc, i|

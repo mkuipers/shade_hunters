@@ -4,8 +4,6 @@ module SpecialAbilities
   end
 
   class Stigmata
-
-
   end
 
 end
