@@ -24,13 +24,13 @@ class Game < ActiveRecord::Base
       players << Player.new(character_card: cc, user: users[i], turn_order: i)
     end
 
-    # create the decks
-    white_deck_cards = WhiteCard.all
-    green_deck_cards = GreenCard.all
-    black_deck_cards = BlackCard.all
-    white_discard_cards = []
-    green_discard_cards = []
-    black_discard_cards = []
+    # # create the decks
+    # white_deck_cards = WhiteCard.all
+    # green_deck_cards = GreenCard.all
+    # black_deck_cards = BlackCard.all
+    # white_discard_cards = []
+    # green_discard_cards = []
+    # black_discard_cards = []
   end
 
   #validation
@@ -44,7 +44,7 @@ class Game < ActiveRecord::Base
   end
 
   def hunters
-    players.where('allegiance' => 'hunter')
+    players.keep_if(&:hunter?)
   end
 
   def shadows

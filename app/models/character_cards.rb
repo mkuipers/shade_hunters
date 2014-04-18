@@ -31,7 +31,7 @@ module CharacterCards
   class CharacterCard
     attr_reader :name, :max_hp, :allegiance, :win_condition, :special_ability
 
-    def initialize(name:, max_hp:, allegiance: )
+    def initialize(name:, max_hp:, allegiance:)
       @allegiance = allegiance
       @name = name
       @max_hp = max_hp

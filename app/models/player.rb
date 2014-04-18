@@ -14,6 +14,11 @@ class Player < ActiveRecord::Base
     where("current_health > 0")
   end
 
+  delegate :allegiance, to: :character_card
+  delegate :hunter?, to: :character_card
+  delegate :shadow?, to: :character_card
+  delegate :neutral?, to: :character_card
+
   def character_card
     CharacterCards.by_name[character_name]
   end

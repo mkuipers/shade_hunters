@@ -62,4 +62,14 @@ describe CharacterCards do
       end
     end
   end
+
+  describe 'win conditions' do
+    context 'HUNTER_WIN_CONDITION' do
+
+    end
+
+    context 'AGNES_WIN_CONDITION' do
+
+    end
+  end
 end
