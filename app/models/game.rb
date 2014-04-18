@@ -48,10 +48,10 @@ class Game < ActiveRecord::Base
   end
 
   def shadows
-    players.where('allegiance' => 'shadow')
+    players.keep_if(&:shadow?)
   end
 
   def neutrals
-    players.where('allegiance' => 'neutral')
+    players.keep_if(&:neutral?)
   end
 end

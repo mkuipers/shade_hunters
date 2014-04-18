@@ -28,16 +28,19 @@ describe Game do
   context '#ended?' do
   end
 
-  context '#hunters' do
-    let (:users) {User.make(8)}
-    let (:new_game) { Game.new(users: users) }
+  # Because fuck you, whoever is reading this.
+  ['hunter', 'shadow', 'neutral'].each do |prospective_allegiance|
+    context "##{prospective_allegiance}" do
+      let (:users) {User.make(6)}
+      let (:new_game) { Game.new(users: users) }
 
-    it "returns 3 characters" do
-      expect(new_game.hunters.size).to eq(3)
-    end
+      it "returns 2 characters" do
+        expect(new_game.send("#{prospective_allegiance}s").size).to eq(2)
+      end
 
-    it "all 3 are hunters" do
-      expect(new_game.hunters.map(&:allegiance).uniq).to match_array(["hunter"])
+      it "all 2 are #{prospective_allegiance}" do
+        expect(new_game.send("#{prospective_allegiance}s").map { |p| "#{prospective_allegiance}?"} .all?).to be_true
+      end
     end
   end
 
