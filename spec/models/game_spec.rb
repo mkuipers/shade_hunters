@@ -18,6 +18,11 @@ describe Game do
       expect(new_game.players.map(&:allegiance) ).to match_array(['hunter','hunter','hunter','shadow','shadow', 'shadow', 'neutral', 'neutral'])
     end
 
+    it 'sets the area cards' do
+      area_cards = (1..6).map { |i| new_game.send("area_card_#{i}") }
+      expect(area_cards).to match_array(AreaCards.all)
+    end
+
     # it 'puts the proper number of cards in each deck' do
     #   expect(new_game.white_deck_cards).to eq(WhiteCard.all)
     #   expect(new_game.green_deck_cards).to eq(GreenCard.all)
@@ -43,11 +48,4 @@ describe Game do
       end
     end
   end
-
-  context '#shadows' do
-  end
-
-  context '#neutrals' do
-  end
-
 end

@@ -11,6 +11,12 @@ class Game < ActiveRecord::Base
   has_many :white_discard_cards, through: :white_card_in_discard
 
   validate :number_of_players
+  validates :area_card_1,
+            :area_card_2,
+            :area_card_3,
+            :area_card_4,
+            :area_card_5,
+            :area_card_6, presence: true
 
   # Creating a new game requires an array of users
   def initialize(users:)
@@ -23,6 +29,12 @@ class Game < ActiveRecord::Base
     character_cards.each_with_index do |cc, i|
       players << Player.new(character_card: cc, user: users[i], turn_order: i)
     end
+
+    #create the area cards
+    #TODO: make the area cards an array.
+    shuffled_area_cards = AreaCards.all.shuffle
+    (1..6).each { |i| send("area_card_#{i}=", shuffled_area_cards[i-1] ) }
+
 
     # # create the decks
     # white_deck_cards = WhiteCard.all
