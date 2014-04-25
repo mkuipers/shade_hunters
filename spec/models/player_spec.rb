@@ -14,8 +14,7 @@ describe Player do
 
   context '.dead' do
     before do
-      game.players.first.current_health - game.players.first.current_health
-      puts game.players.first.current_health
+      game.players.first.current_health = 0
       game.players.first.save!
     end
 
