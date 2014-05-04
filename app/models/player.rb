@@ -1,6 +1,8 @@
 class Player < ActiveRecord::Base
   belongs_to :game
   belongs_to :user
+  has_many :kills, class_name: "Player", foreign_key: :killed_by_id
+  belongs_to :killed_by, class_name: "Player"
 
   def initialize(character_card:, user:, turn_order:)
     super(user: user, turn_order: turn_order, current_health: character_card.max_hp, character_name: character_card.name )
@@ -23,9 +25,6 @@ class Player < ActiveRecord::Base
     CharacterCards.by_name[character_name]
   end
 
-  def kills
-    0
-  end
 
   def equipment
     []

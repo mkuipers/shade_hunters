@@ -29,7 +29,27 @@ describe Player do
     end
   end
 
-  context '#kills' do
+  context '#kills and #killed_by' do
+    subject { game.players.first }
+    let(:slain_player_1) { game.players[1] }
+    let(:slain_player_2) { game.players[2] }
+
+    before do
+      slain_player_2.killed_by = subject
+      slain_player_1.killed_by = subject
+      slain_player_1.save!
+      slain_player_2.save!
+      subject.reload
+    end
+
+    it "should have two players in the #kills collection" do
+      expect(subject.kills.size).to eq(2)
+    end
+
+    it "should have the two slain players in #kills collection" do
+      expect(subject.kills).to match_array([slain_player_1, slain_player_2])
+    end
+
   end
 
   context '#equipment' do
